@@ -4,39 +4,640 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fletcher Street Corporation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #333; }
-    h1 { color: #1B3868; }
-    h2 { color: #15515a; margin-top: 40px; }
-    a { color: #15515a; }
-    .product { background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; }
-    .product h3 { margin-top: 0; color: #1B3868; }
-    .links { margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; }
-    .links a { display: block; margin: 8px 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1B3868;
+      --teal: #15515a;
+      --teal-light: #1d6b77;
+      --sand: #f5f0e8;
+      --white: #ffffff;
+      --gray: #6b7280;
+      --gray-light: #f3f4f6;
+      --text: #1a1a2e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 60px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--gray);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--navy); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+      padding: 120px 60px 80px;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(21,81,90,0.4) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -150px; left: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(21,81,90,0.25) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.75;
+      max-width: 520px;
+      margin-bottom: 48px;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--white);
+      color: var(--navy);
+      padding: 14px 28px;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    /* MISSION */
+    .mission {
+      padding: 120px 60px;
+      background: var(--sand);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .mission-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 20px;
+    }
+
+    .mission h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+
+    .mission-text p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: #4a5568;
+      line-height: 1.85;
+      margin-bottom: 20px;
+    }
+
+    .mission-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .stat {
+      padding: 32px;
+      background: var(--white);
+      border-radius: 8px;
+      border-left: 3px solid var(--teal);
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--gray);
+      line-height: 1.4;
+    }
+
+    /* BRANDS */
+    .brands {
+      padding: 120px 60px;
+      background: var(--white);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 16px;
+    }
+
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .brand-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .brand-card {
+      border-radius: 12px;
+      overflow: hidden;
+      text-decoration: none;
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: block;
+    }
+
+    .brand-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.12);
+    }
+
+    .brand-card-header {
+      padding: 48px 40px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .compass-header { background: var(--navy); }
+    .pulp-header { background: var(--teal); }
+
+    .brand-card-header::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; right: -60px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .brand-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      font-size: 1.5rem;
+    }
+
+    .brand-card-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .brand-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.1);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .brand-card-body {
+      padding: 36px 40px;
+      background: var(--gray-light);
+    }
+
+    .brand-card-body p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: #4a5568;
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    .brand-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--teal);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: gap 0.2s;
+    }
+
+    .brand-link:hover { gap: 12px; }
+
+    /* VALUES */
+    .values {
+      padding: 120px 60px;
+      background: var(--navy);
+    }
+
+    .values .section-label { color: rgba(255,255,255,0.5); }
+
+    .values .section-header h2 { color: var(--white); }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .value-item {
+      padding: 40px 32px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .value-item:hover {
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .value-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.1);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .value-item h4 {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .value-item p {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.75;
+    }
+
+    /* CONTACT */
+    .contact {
+      padding: 100px 60px;
+      background: var(--sand);
+      text-align: center;
+    }
+
+    .contact h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+
+    .contact p {
+      font-size: 1rem;
+      color: var(--gray);
+      margin-bottom: 36px;
+    }
+
+    .contact a.email-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--navy);
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .contact a.email-link:hover {
+      background: var(--teal);
+      transform: translateY(-2px);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--text);
+      padding: 48px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.3);
+      width: 100%;
+      text-align: center;
+      margin-top: 8px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* ANIMATIONS */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 24px 60px; }
+      .mission { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+      .brands { padding: 80px 24px; }
+      .brand-grid { grid-template-columns: 1fr; }
+      .values { padding: 80px 24px; }
+      .values-grid { grid-template-columns: 1fr; }
+      .contact { padding: 80px 24px; }
+      footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
-  <h1>Fletcher Street Corporation</h1>
-  <p>Fletcher Street Corporation is a Delaware corporation that builds technology to help families navigate life's most important decisions.</p>
 
-  <h2>Our Products</h2>
-  <div class="product">
-    <h3>Compass Place</h3>
-    <p>Compass Place is a mobile app that helps families find the right senior living community for their parent or loved one. Compass Place provides personalized matching, side-by-side community comparisons, tour scheduling, and local Trail Guide support — all at no cost to families.</p>
-    <p><a href="https://compassplace.com">Visit Compass Place →</a></p>
-  </div>
+  <nav>
+    <a href="/" class="nav-logo">Fletcher Street</a>
+    <ul class="nav-links">
+      <li><a href="#brands">Our Brands</a></li>
+      <li><a href="#values">Values</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-  <div class="links">
-    <h2>Legal</h2>
-    <a href="https://compassplace.com/privacy-policy">Compass Place Privacy Policy</a>
-    <a href="https://compassplace.com/terms-of-service">Compass Place Terms of Service</a>
-  </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Fletcher Street Corporation</p>
+      <h1>Technology for <em>life's most important</em> decisions.</h1>
+      <p>We build consumer technology that helps families navigate complex, high-stakes moments — with clarity, confidence, and care.</p>
+      <a href="#brands" class="hero-cta">Explore our brands ↓</a>
+    </div>
+  </section>
 
-  <div class="links">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:connect@compassplace.com">connect@compassplace.com</a></p>
-  </div>
+  <!-- MISSION -->
+  <section class="mission">
+    <div class="mission-left fade-in">
+      <p class="mission-label">Who We Are</p>
+      <h2>A Delaware corporation building purposeful technology.</h2>
+    </div>
+    <div class="mission-text fade-in">
+      <p>Fletcher Street Corporation is a technology holding company focused on building consumer-facing products that solve real problems for real families. We operate at the intersection of technology, trust, and human need.</p>
+      <p>Our products are built with a simple belief: the best technology disappears into the background, leaving people with more time, more confidence, and more control over their lives.</p>
+      <div class="mission-stats">
+        <div class="stat">
+          <div class="stat-number">2</div>
+          <div class="stat-label">Active consumer brands</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">2024</div>
+          <div class="stat-label">Founded in Columbus, Ohio</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <p style="margin-top: 40px; color: #999; font-size: 14px;">© 2024-2026 Fletcher Street Corporation. All rights reserved.</p>
+  <!-- BRANDS -->
+  <section class="brands" id="brands">
+    <div class="section-header fade-in">
+      <p class="section-label">Our Portfolio</p>
+      <h2>Two brands. One mission.</h2>
+    </div>
+    <div class="brand-grid">
+      <a href="/compassplace" class="brand-card fade-in">
+        <div class="brand-card-header compass-header">
+          <div class="brand-icon">🧭</div>
+          <h3>Compass Place</h3>
+          <span class="brand-tag">Senior Living</span>
+        </div>
+        <div class="brand-card-body">
+          <p>Helping families find the right senior living community for their loved one — with personalized matching, side-by-side comparisons, and local Trail Guide support. Free for families, always.</p>
+          <span class="brand-link">Learn more →</span>
+        </div>
+      </a>
+      <a href="/pulp" class="brand-card fade-in">
+        <div class="brand-card-header pulp-header">
+          <div class="brand-icon">📬</div>
+          <h3>Pulp</h3>
+          <span class="brand-tag">Consumer · Coming Soon</span>
+        </div>
+        <div class="brand-card-body">
+          <p>Empowering consumers to opt out of physical junk mail — one piece at a time. Pulp turns your unwanted mail into a verified opt-out signal that actually reaches the companies sending it.</p>
+          <span class="brand-link">Learn more →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="values" id="values">
+    <div class="section-header fade-in">
+      <p class="section-label">How We Build</p>
+      <h2 style="color:white;">Our principles.</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-item fade-in">
+        <div class="value-number">01</div>
+        <h4>People first</h4>
+        <p>Every product decision starts with the question: does this make someone's life meaningfully better? If not, we don't build it.</p>
+      </div>
+      <div class="value-item fade-in">
+        <div class="value-number">02</div>
+        <h4>Honest by design</h4>
+        <p>We tell users exactly what we collect, why we collect it, and how it's used. No dark patterns. No buried fine print.</p>
+      </div>
+      <div class="value-item fade-in">
+        <div class="value-number">03</div>
+        <h4>Built to last</h4>
+        <p>We build for durability, not virality. Sustainable businesses that serve their communities for years, not quarters.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <h2>Get in touch.</h2>
+    <p>Questions about our products, press inquiries, or partnership opportunities.</p>
+    <a href="mailto:cpratt@thefletcherstreet.com" class="email-link">cpratt@thefletcherstreet.com</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Fletcher Street Corporation</div>
+    <ul class="footer-links">
+      <li><a href="/compassplace">Compass Place</a></li>
+      <li><a href="/pulp">Pulp</a></li>
+      <li><a href="/pulp/privacy-policy">Pulp Privacy Policy</a></li>
+      <li><a href="/pulp/terms-of-service">Pulp Terms of Service</a></li>
+      <li><a href="https://compassplace.com/privacy-policy">Compass Place Privacy Policy</a></li>
+      <li><a href="https://compassplace.com/terms-of-service">Compass Place Terms of Service</a></li>
+    </ul>
+    <p class="footer-copy">© 2024–2026 Fletcher Street Corporation. All rights reserved. · Delaware C-Corporation</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 100);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
 </body>
 </html>
