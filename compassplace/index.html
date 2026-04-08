@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compass Place — Fletcher Street Corporation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #1B3868;
+      --teal: #15515a;
+      --sand: #f5f0e8;
+      --white: #ffffff;
+      --gray: #6b7280;
+      --text: #1a1a2e;
+    }
+    body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--white); }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); text-decoration: none; }
+    .nav-back { font-size: 0.85rem; font-weight: 500; color: var(--gray); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+    .nav-back:hover { color: var(--navy); }
+
+    .hero {
+      min-height: 70vh; display: flex; align-items: center;
+      background: var(--navy); padding: 140px 60px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -100px; right: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(21,81,90,0.5) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 640px; }
+    .hero-eyebrow { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 20px; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 4vw, 3.8rem); font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 24px; }
+    .hero p { font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 40px; }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--white); color: var(--navy);
+      padding: 14px 28px; border-radius: 4px;
+      font-size: 0.875rem; font-weight: 500; text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+    .about { padding: 100px 60px; background: var(--sand); }
+    .about-inner { max-width: 760px; margin: 0 auto; }
+    .section-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; }
+    .about h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--navy); margin-bottom: 28px; }
+    .about p { font-size: 1rem; font-weight: 300; color: #4a5568; line-height: 1.85; margin-bottom: 20px; }
+
+    .features { padding: 100px 60px; background: var(--white); }
+    .features h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--navy); text-align: center; margin-bottom: 56px; }
+    .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; max-width: 860px; margin: 0 auto; }
+    .feature { padding: 36px; background: #f9fafb; border-radius: 10px; border-left: 3px solid var(--navy); }
+    .feature h4 { font-size: 1rem; font-weight: 500; color: var(--navy); margin-bottom: 10px; }
+    .feature p { font-size: 0.9rem; font-weight: 300; color: var(--gray); line-height: 1.7; }
+
+    .visit { padding: 80px 60px; background: var(--navy); text-align: center; }
+    .visit h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--white); margin-bottom: 16px; }
+    .visit p { font-size: 1rem; color: rgba(255,255,255,0.6); margin-bottom: 36px; }
+    .visit a {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--white); color: var(--navy);
+      padding: 14px 32px; border-radius: 4px;
+      font-size: 0.875rem; font-weight: 500; text-decoration: none;
+      transition: transform 0.2s;
+    }
+    .visit a:hover { transform: translateY(-2px); }
+
+    footer {
+      background: var(--text); padding: 40px 60px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: rgba(255,255,255,0.6); }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 0.8rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.8); }
+    .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.25); width: 100%; text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 8px; }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .hero { padding: 100px 24px 60px; }
+      .about, .features, .visit { padding: 72px 24px; }
+      .features-grid { grid-template-columns: 1fr; }
+      footer { padding: 36px 24px; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">Fletcher Street</a>
+    <a href="/" class="nav-back">← All Brands</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">A Fletcher Street Brand</p>
+      <h1>Compass Place</h1>
+      <p>Helping families find the right senior living community for their loved one — with clarity, confidence, and care. Free for families, always.</p>
+      <a href="https://compassplace.com" class="hero-cta">Visit Compass Place →</a>
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="about-inner">
+      <p class="section-label">About</p>
+      <h2>Senior living search, simplified.</h2>
+      <p>Finding the right senior living community for a parent or loved one is one of the most emotionally charged, logistically complex decisions a family can face. Compass Place was built to make that process clearer, faster, and less overwhelming.</p>
+      <p>Compass Place provides personalized community matching, side-by-side comparisons, tour scheduling, and support from local Trail Guides who know the communities in your area — all at no cost to families. Our referral-based model means families always come first.</p>
+      <p>Currently serving the Columbus, Ohio area, with expansion planned across Indiana and beyond.</p>
+    </div>
+  </section>
+
+  <section class="features">
+    <h2>What Compass Place offers</h2>
+    <div class="features-grid">
+      <div class="feature">
+        <h4>🧭 Personalized Matching</h4>
+        <p>Answer a few questions and get matched to communities that fit your loved one's care needs, preferences, and budget.</p>
+      </div>
+      <div class="feature">
+        <h4>📊 Side-by-Side Comparisons</h4>
+        <p>Compare communities across amenities, pricing, care levels, and quality scores — all in one place.</p>
+      </div>
+      <div class="feature">
+        <h4>📅 Tour Scheduling</h4>
+        <p>Schedule tours directly through the app. Get reminders, directions, and follow-up support.</p>
+      </div>
+      <div class="feature">
+        <h4>🤝 Local Trail Guides</h4>
+        <p>Connect with a local expert who knows the communities in your area and can help guide your decision.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="visit">
+    <h2>Ready to find the right community?</h2>
+    <p>Compass Place is free for families. No pressure, no obligation.</p>
+    <a href="https://compassplace.com">Get started at compassplace.com →</a>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Fletcher Street Corporation</div>
+    <ul class="footer-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/pulp">Pulp</a></li>
+      <li><a href="https://compassplace.com/privacy-policy">Privacy Policy</a></li>
+      <li><a href="https://compassplace.com/terms-of-service">Terms of Service</a></li>
+    </ul>
+    <p class="footer-copy">© 2024–2026 Fletcher Street Corporation. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
