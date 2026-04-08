@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulp — Fletcher Street Corporation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #1B3868;
+      --teal: #15515a;
+      --teal-light: #1d6b77;
+      --sand: #f5f0e8;
+      --white: #ffffff;
+      --gray: #6b7280;
+      --text: #1a1a2e;
+    }
+    body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--white); }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); text-decoration: none; }
+    .nav-back { font-size: 0.85rem; font-weight: 500; color: var(--gray); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+    .nav-back:hover { color: var(--navy); }
+
+    .hero {
+      min-height: 70vh; display: flex; align-items: center;
+      background: var(--teal); padding: 140px 60px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -100px; right: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(27,56,104,0.3) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: ''; position: absolute; bottom: -80px; left: 10%;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(0,0,0,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 640px; }
+    .hero-eyebrow { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 20px; }
+    .coming-soon-badge {
+      display: inline-block; background: rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.8); font-size: 0.7rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 20px; margin-bottom: 24px;
+    }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 4vw, 3.8rem); font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 24px; }
+    .hero p { font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,0.75); line-height: 1.8; margin-bottom: 40px; max-width: 520px; }
+
+    .notify-form { display: flex; gap: 12px; flex-wrap: wrap; }
+    .notify-form input {
+      flex: 1; min-width: 220px;
+      padding: 14px 18px; border-radius: 4px; border: none;
+      font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+      outline: none;
+    }
+    .notify-form button {
+      background: var(--navy); color: var(--white);
+      padding: 14px 24px; border-radius: 4px; border: none;
+      font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 500;
+      cursor: pointer; transition: background 0.2s, transform 0.2s; white-space: nowrap;
+    }
+    .notify-form button:hover { background: #152d56; transform: translateY(-1px); }
+    .notify-note { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-top: 12px; }
+
+    .problem { padding: 100px 60px; background: var(--sand); }
+    .problem-inner { max-width: 780px; margin: 0 auto; }
+    .section-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; }
+    .problem h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--navy); margin-bottom: 28px; line-height: 1.25; }
+    .problem p { font-size: 1rem; font-weight: 300; color: #4a5568; line-height: 1.85; margin-bottom: 20px; }
+
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+    .stat { padding: 28px; background: var(--white); border-radius: 8px; text-align: center; border-top: 3px solid var(--teal); }
+    .stat-number { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--teal); line-height: 1; margin-bottom: 8px; }
+    .stat-label { font-size: 0.82rem; font-weight: 400; color: var(--gray); line-height: 1.4; }
+
+    .how { padding: 100px 60px; background: var(--white); }
+    .how h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--navy); text-align: center; margin-bottom: 64px; }
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; max-width: 960px; margin: 0 auto; }
+    .step { text-align: center; padding: 32px 20px; }
+    .step-number {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--teal); color: var(--white);
+      font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .step h4 { font-size: 0.95rem; font-weight: 500; color: var(--navy); margin-bottom: 10px; }
+    .step p { font-size: 0.85rem; font-weight: 300; color: var(--gray); line-height: 1.7; }
+
+    .green { padding: 100px 60px; background: var(--teal); }
+    .green-inner { max-width: 680px; margin: 0 auto; text-align: center; }
+    .green h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--white); margin-bottom: 24px; }
+    .green p { font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.7); line-height: 1.85; margin-bottom: 16px; }
+
+    .legal-links { padding: 60px; background: var(--sand); text-align: center; }
+    .legal-links p { font-size: 0.875rem; color: var(--gray); margin-bottom: 16px; }
+    .legal-links a { color: var(--teal); text-decoration: none; margin: 0 16px; font-size: 0.875rem; font-weight: 500; }
+    .legal-links a:hover { text-decoration: underline; }
+
+    footer {
+      background: var(--text); padding: 40px 60px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: rgba(255,255,255,0.6); }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 0.8rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.8); }
+    .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.25); width: 100%; text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 8px; }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .hero { padding: 100px 24px 60px; }
+      .problem, .how, .green, .legal-links { padding: 72px 24px; }
+      .stats-row { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      footer { padding: 36px 24px; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">Fletcher Street</a>
+    <a href="/" class="nav-back">← All Brands</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">A Fletcher Street Brand</p>
+      <div class="coming-soon-badge">📬 Coming Soon</div>
+      <h1>Pulp</h1>
+      <p>Snap a photo of your junk mail. We'll do the rest. Pulp turns your unwanted mail into a verified opt-out signal that actually reaches the companies sending it.</p>
+      <form class="notify-form" onsubmit="handleNotify(event)">
+        <input type="tel" id="notify-phone" placeholder="Your phone number" />
+        <button type="submit">Notify me at launch</button>
+      </form>
+      <p class="notify-note">No spam. Just a text when Pulp launches. That's it.</p>
+    </div>
+  </section>
+
+  <section class="problem">
+    <div class="problem-inner">
+      <p class="section-label">The Problem</p>
+      <h2>Americans drown in junk mail. There's been no good way out. Until now.</h2>
+      <p>Every year, hundreds of millions of pieces of unsolicited mail land in American mailboxes — catalogs, credit offers, insurance flyers, coupon packs. Most of it goes straight to the trash. None of it was asked for. And until now, opting out has been a fragmented, frustrating, often futile process.</p>
+      <p>Pulp changes that. By turning your physical mail into structured opt-out data — verified by your address, timestamped, and categorized — we create a signal that mailers can't ignore.</p>
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-number">848</div>
+          <div class="stat-label">Pieces of junk mail per US household per year</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">100M</div>
+          <div class="stat-label">Trees consumed by junk mail annually</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">44%</div>
+          <div class="stat-label">Of junk mail goes to trash unopened</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <h2>How Pulp works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h4>Photograph</h4>
+        <p>Snap photos of the front and back of any piece of junk mail you receive.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h4>Tell us why</h4>
+        <p>Check off why you don't want it and rate how strongly you feel on a simple scale.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h4>Submit</h4>
+        <p>Your opt-out request is logged, verified against your address, and added to our database.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <h4>We take it from here</h4>
+        <p>We identify the mailer and work to get you removed. No more junk from them.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="green">
+    <div class="green-inner">
+      <h2>Good for you. Better for the planet.</h2>
+      <p>Junk mail isn't just annoying — it's an environmental problem. 100 million trees are cut down every year to produce mail that goes straight to landfill. Every piece of mail you Pulp is one less piece printed, shipped, and trashed.</p>
+      <p>Pulp tracks your environmental impact and shows you exactly how much paper, water, and carbon your opt-outs have saved.</p>
+    </div>
+  </section>
+
+  <section class="legal-links">
+    <p>Legal documents for Pulp</p>
+    <a href="/pulp/privacy-policy">Privacy Policy</a>
+    <a href="/pulp/terms-of-service">Terms of Service</a>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Fletcher Street Corporation</div>
+    <ul class="footer-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/compassplace">Compass Place</a></li>
+      <li><a href="/pulp/privacy-policy">Privacy Policy</a></li>
+      <li><a href="/pulp/terms-of-service">Terms of Service</a></li>
+    </ul>
+    <p class="footer-copy">© 2024–2026 Fletcher Street Corporation. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function handleNotify(e) {
+      e.preventDefault();
+      const input = document.getElementById('notify-phone');
+      if (input.value) {
+        input.value = '';
+        alert("You're on the list! We'll text you when Pulp launches.");
+      }
+    }
+  </script>
+
+</body>
+</html>
